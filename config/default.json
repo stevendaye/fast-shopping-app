@@ -1,0 +1,26 @@
+{
+    "port": "8080",
+    "host": {
+        "client": "process.env.CLIENT_ORIGIN_HOST || http://localhost:3000"
+    },
+    "routes": {
+        "user": {
+            "save": "/users/save",
+            "check": "/users/check/:email"
+        },
+        "product": {
+            "save": "/products/save",
+            "list": "/products/list"
+        },
+        "category": {
+            "save": "/categories/save",
+            "saveProductCategory": "/categories/save/product-categories",
+            "check": "/categories/check/:id",
+            "list": "/categories/list"
+        },
+        "order": {
+            "save": "/orders/save",
+            "check": "/orders/check/:id"
+        }
+    }
+}

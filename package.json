@@ -1,0 +1,44 @@
+{
+  "name": "fast-shopping-app",
+  "version": "1.0.0",
+  "description": "Fast Shopping is a simple e-commerce platform that allows vistors to order their products online.",
+  "main": "app.js",
+  "scripts": {
+    "server": "cross-env DEBUG=fast-shopping:* SEQUELIZE_CONNECT=sequelize-mysql.yaml nodemon --exec babel-node app.js",
+    "start": "SEQUELIZE_CONNECT=sequelize-mysql.yaml babel-node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stevendaye/fast-shopping-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stevendaye/fast-shopping-app/issues"
+  },
+  "homepage": "https://github.com/stevendaye/fast-shopping-app#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "body-parser": "^1.19.0",
+    "config": "^3.3.1",
+    "cors": "^2.8.5",
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "express-validator": "^6.6.0",
+    "fs-extra": "^9.0.1",
+    "js-yaml": "^3.14.0",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "rotating-file-stream": "^2.1.3",
+    "sequelize": "^6.3.1",
+    "uuid": "^8.2.0"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0",
+    "cross-env": "^7.0.2",
+    "nodemon": "^2.0.4"
+  }
+}
