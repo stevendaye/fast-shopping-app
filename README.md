@@ -29,17 +29,17 @@ While the codebase can be accessed at https://github.com/stevendaye/fast-shoppin
 This app is deployed on heroku at https://the-fast-shopping-app.herokupapp.com. However, would you wish to run it in development too, follow these steps. Beforehand, make sure you are running a MySQL Server on your machine.
 
 **1- Make a clone of the app**
-    - `git clone https://github.com/stevendaye/fast-shopping-app`
+* `git clone https://github.com/stevendaye/fast-shopping-app`
 
-**Go to the root of the project and run the following**
-    - `cd fast-shopping-app`
-    *Frontend*
-        - `cd client/`
-        - `npm i`
-    *Backend*
-        - `cd ../`
-        - `npm i`
-        - `npm run app`
+**2- Go to the root of the project and run the following**
+* `cd fast-shopping-app`
+*Frontend*
+  - `cd client/`
+  - `npm i`
+*Backend*
+  - `cd ../`
+  - `npm i`
+  - `npm run app`
 
 
 ## Frontend Directoy
