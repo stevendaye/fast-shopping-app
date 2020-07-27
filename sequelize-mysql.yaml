@@ -1,6 +1,6 @@
-dbname: heroku_2417406112b80bc
-username: bea1a4d853514a
-password: 057bcfb6
+dbname: heroku_949fa95420be952
+username: b70f9fb74cc731
+password: e993008a
 params:
   dialect: mysql
   host: us-cdbr-east-02.cleardb.com
