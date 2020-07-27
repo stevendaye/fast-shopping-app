@@ -31,11 +31,11 @@ Follow these steps. Beforehand, make sure you are running a MySQL instance on yo
 
 **3 Intall required dependencies**
   
-  *Frontend*
+*Frontend*
     * `cd client/`
     * `npm i`
 
-  *Backend*
+*Backend*
     * `cd ../`(project root)
     * `npm i`
 
