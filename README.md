@@ -39,12 +39,12 @@ Follow these steps. Beforehand, make sure you are running a MySQL instance on yo
   * `cd ../`(project root)
   * `npm i`
 
-NB: You can access the database *username* and *password* in the YAML configuration file at the root of the project, or you can change these parameters in that YAML file at *./sequelize-mysql.yaml* by your own mysql access parameters you are already using for your mysql access. However, the current parameters are:
+NB: Before booting the app, you can access the database *username* and *password* in the YAML configuration file at the root of the project, or you can change these parameters in that YAML file at *./sequelize-mysql.yaml* by your own mysql access parameters you are already using for your mysql access. However, the current parameters are:
   * `username = root`
   * `password = root`
 
-**4 Create the MySQL database then start up the application at the root of the project**
-  - `CREATE DATABASE fastshopping;`(Either in CLI or Make sure you are running your mysql instance)
+**4 Access you myql server and create the MySQL database then start up the application at the root of the project**
+  - `CREATE DATABASE fastshopping;`(Either in the CLI or a GUI. Make sure your mysql instance is up)
   - `npm run dev`
 
 NB: Should anything go wrong in the installation proccess, try forcing the installation (I am quite sure you won't need to though). When successful you should see the message `Shopping Server listening at http://localhost:8080`.
