@@ -1,6 +1,10 @@
 import Sequelize from "sequelize";
 import fs from "fs-extra";
 import jsyaml from "js-yaml";
+import Orders from "./orders-sequelize";
+import Categories from "./categories-sequelize";
+import ProductOrders from "./productOrders-sequelize";
+import ProductCategories from "./productCategories-sequelize";
 
 let sqlize;
 let SqProducts;
@@ -39,7 +43,7 @@ async function connectDB() {
             }
         },
         unit_price: {
-            type: Sequelize.NUMBER,
+            type: Sequelize.FLOAT,
             allowNull: false
         },
         in_stock: {
@@ -54,7 +58,7 @@ async function connectDB() {
             type: Sequelize.STRING,
             allowNull: false
         },
-        relase_date: {
+        release_date: {
             type: Sequelize.DATE,
             validate: {
                 notEmpty: true
@@ -63,85 +67,74 @@ async function connectDB() {
     });
 
     // @desc Make association between Products and Orders tables
-    SqProducts.associate = models => {
-        SqProducts.belongsToMany(models.Orders, {
-            through: "ProductOrders",
-            as: "orders",
-            foreignKey: "product_id",
-            otherKey: "order_id"
-        });
-    };
+    SqProducts.belongsToMany(await Orders(), {
+        through: await ProductOrders(),
+        as: "orders",
+        foreignKey: "product_id",
+        otherKey: "order_id"
+    });
 
     // @desc Make association between Products and Categories
-    SqProducts.associate = models => {
-        SqProducts.belongsToMany(models.Categories, {
-            through: "ProductCategories",
-            as: "categories",
-            foreignKey: "product_id",
-            otherKey: "category_id"
-        });
-    };
+    SqProducts.belongsToMany(await Categories(), {
+        through: await ProductCategories(),
+        as: "categories",
+        foreignKey: "product_id",
+        otherKey: "category_id"
+    });
 
     return SqProducts.sync();
 }
 
 // @desc Store products into the database
 async function save(product_id, title, name, description, unit_price, in_stock,
-    out_of_stock, state, relase_date) {
+    out_of_stock, state, release_date) {
     const SqProducts = await connectDB();
     const product = await SqProducts.create({
         product_id, title, name, description, unit_price, in_stock,
-        out_of_stock, state, relase_date
+        out_of_stock, state, release_date
     });
     return product;
 }
 
+// @desc Check a specific product
 async function check(product_id) {
     const SqProducts = await connectDB();
-    const product = SqProducts.findOne({
+    const product = await SqProducts.findOne({
         where: {
             product_id: {[Op.eq]: product_id}
         }
     });
-    if (!product) {
-        return {
-            found: false,
-            product_id
-        }
-    }
-
-    return {
-        found: true,
-        product
-    };
+    return product;
 }
 
 // @desc List paginated products belonging to a specific category
-async function list(page, size) {
+async function list(page, hitsPerPage) {
     const SqProducts = await connectDB();
-    const skip = size * (page - 1);
-    const limit = size;
+    const skip = hitsPerPage * (page - 1);
+    const limit = hitsPerPage;
 
     const products = await SqProducts.findAll({
         include: [{
-            model: models.Categories,
+            model: await Categories(),
             as: "categories",
             required: false,
-            attributes: ["category_id, category_name"],
+            attributes: ["category_id", "category_name"],
             through: {
+                model: await ProductCategories(),
                 attributes: []
             },
         }],
-        order: [["title", "ASC"]],
+        order: [["name", "ASC"]],
         offset: skip,
         limit
     });
 
-    const pages = Math.floor(products.length / size);
+    const pages = Math.ceil((await SqProducts.findAll({})).length/hitsPerPage);
 
     return {
-        page, size, pages, products
+        page, hitsPerPage, pages, products
     };
 }
 
+export default connectDB;
 export { save, check, list };

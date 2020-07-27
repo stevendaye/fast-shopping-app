@@ -8,7 +8,7 @@ const productsRoutes = app => {
     router.post(config.get("routes.product.save"), product.save);
     router.get(config.get("routes.product.list"), product.list);
 
-    router.use(app);
+    app.use(router);
 };
 
 export default productsRoutes;

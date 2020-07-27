@@ -15,18 +15,22 @@ export default {
     // @desc Populate|Save Categories
     async save(req, res, next) {
         try {
-            let storedCategories;
             let categories = req.body.categories;
 
-            storedCategories = categories.map(async category =>
-                await CategoriesModel.save(
-                    category.category_id, category.category_name,
-                    category.description
-                )
-            );
+            categories = categories.map(async category => {
+                let hasCategory = await CategoriesModel.find(category.category_id);
+                if (!hasCategory) {
+                    return await CategoriesModel.save(
+                        category.category_id, category.category_name,
+                        category.description
+                    );
+                } else {
+                    categories = [];
+                }
+            });
+            debug(`save categroies: ${await Promise.all(categories)}`);
 
-            debug(`save categroies: ${util.inspect(storedCategories)}`);
-            res.json(await Promise.all(storedCategories));
+            res.json(await Promise.all(categories));
         } catch (err) {
             flush(err.stack);
             res.status(500).send(`
@@ -88,17 +92,23 @@ export default {
     // @desc Populate|Save relations between products & categories
     async saveProductCategories(req, res, next) {
         try {
-            let storedProductCategories;
             let productCategories = req.body.productCategories;
 
-            storedProductCategories = productCategories.map(async productCategory =>
-                await ProductCategoriesModel.save(
+            productCategories = productCategories.map(async productCategory => {
+                let hasProductCategory = await ProductCategoriesModel.check(
                     productCategory.category_id, productCategory.product_id
-                )
-            );
-
-            debug(`save product categories: ${util.inspect(storedProductCategories)}`);
-            res.json(await Promise.all(storedProductCategories));
+                );
+                if (!hasProductCategory) {
+                    return await ProductCategoriesModel.save(
+                        productCategory.category_id, productCategory.product_id
+                    );
+                } else {
+                    productCategories = [];
+                }
+            });
+            debug(`save product categories: ${await Promise.all(productCategories)}`);
+            
+            res.json(await Promise.all(productCategories));
         } catch (err) {
             flush(err.stack);
             res.status(500).send(`

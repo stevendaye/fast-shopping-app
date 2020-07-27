@@ -3,7 +3,8 @@ import fs from "fs-extra";
 import jsyaml from "js-yaml";
 
 let sqlize;
-let SqProductcategories;
+let SqProductCategories;
+let Op = Sequelize.Op;
 
 async function connectDB() {
     if (typeof sqlize === "undefined") {
@@ -13,25 +14,44 @@ async function connectDB() {
         sqlize = new Sequelize(params.dbname, params.username, params.password, params.params);
     }
 
-    if (SqProductcategories) {
-        return SqProductcategories.sync();
+    if (SqProductCategories) {
+        return SqProductCategories.sync();
     }
 
-    SqProductcategories = sqlize.define("ProductCategories", {
-        category_id: Sequelize.INTEGER,
-        product_id: Sequelize.INTEGER
+    SqProductCategories = sqlize.define("ProductCategories", {
+        category_id: {
+            type: Sequelize.INTEGER,
+            allowNull: false
+        },
+        product_id: {
+            type: Sequelize.INTEGER,
+            allowNull: false
+        }
     });
     
-    SqProductcategories.sync();
+    return SqProductCategories.sync();
 }
 
-// Save data relations between products and categories
+// Save data relationship between products and categories
 async function save(category_id, product_id) {
-    const SqProductcategories = await connectDB();
-    const productCategory = await SqProductcategories.create({
+    const SqProductCategories = await connectDB();
+    const productCategory = await SqProductCategories.create({
         category_id, product_id
     });
     return productCategory;
 }
 
-export { save };
+// Check existence of relationship between products and categories
+async function check(category_id, product_id) {
+    const SqProductCategories = await connectDB();
+    const productCategory = await SqProductCategories.findOne({
+        where: {
+            category_id: { [Op.eq]: category_id },
+            product_id: { [Op.eq]: product_id }
+        }
+    });
+    return productCategory;
+}
+
+export default connectDB;
+export { save, check };

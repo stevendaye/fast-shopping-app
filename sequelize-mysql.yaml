@@ -1,6 +1,6 @@
-dbname: FastShopping
-username: unwhite
-password: unwhite050793Sad
+dbname: fastshopping
+username: root
+password: root
 params:
   dialect: mysql
   host: localhost

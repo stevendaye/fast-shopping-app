@@ -17,21 +17,35 @@ export default {
     // @desc Save|Create orders
     async save(req, res, next) {
         try {
-            let order_id = uuid();
+            const order_id = uuid();
+            const user_id = req.body.user_id;
+
             let order = req.body.order;
             let products = req.body.products;
-            let user = req.body.user_id;
+            let missing_products = [];
 
             products = products.map(async product => {
                 const item = await ProductsModel.check(product.product_id);
-                if (item.found) {
-                    await ProductOrdersModel.save(
+                if (item) {
+                    return await ProductOrdersModel.save(
                         order_id, product.product_id, product.quantity
                     );
+                } else {
+                    missing_products.push(product.name);
                 }
             });
 
-            order = await OrdersModel.save(order.order_id, user, order.order_date,
+            // @desc Should an ordered product not be in stock, save it in the MissingProducts table
+            // @desc MissingProducts table is created to collect bugs. Only products in stock should be ordered
+            if (missing_products.length > 0) {
+                return res.status(400).json({
+                    status: "400 Bad Request",
+                    alert: "In Any Case, Should You Never See This Message. However, We Are Working To Fix This.",
+                    message: `Products like "${missing_products.join("")}" are no more available.`
+                });
+            }
+
+            order = await OrdersModel.save(order_id, user_id, order.order_date,
                 order.ship_date, order.ship_address, order.subtotal
             );
             debug(`save order: ${util.inspect(order)}`);

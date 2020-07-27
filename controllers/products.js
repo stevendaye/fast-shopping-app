@@ -1,8 +1,6 @@
 import config from "config";
 import util from "util";
 import DBG from "debug";
-import ConnectOrders_db from "../models/orders-sequelize";
-import ConnectProductOrders_db from "../models/productOrders-sequelize";
 import * as ProductsModel from "../models/poducts-sequelize";
 
 const debug = DBG("fast-shopping:products-controllers-debug");
@@ -16,22 +14,23 @@ export default {
     // @desc Populate|Save products
     async save(req, res, next) {
         try {
-            let storedProducts;
             let products = req.body.products;
 
-            await ConnectProductOrders_db();
-            await ConnectOrders_db();
+            products = products.map(async product => {
+                let hasProduct = await ProductsModel.check(product.product_id);
+                if (!hasProduct) {
+                    return await ProductsModel.save(
+                        product.product_id, product.title, product.name,
+                        product.description, product.unit_price, product.in_stock,
+                        product.out_of_stock, product.state, product.release_date
+                    );
+                } else {
+                    products = [];
+                }
+            });
+            debug(`save products: ${await Promise.all(products)}`);
 
-            storedProducts = products.map(async product =>
-                await ProductsModel.save(
-                    product.product_id, product.title, product.name,
-                    product.description, product.unit_price, product.in_stock,
-                    product.out_of_stock, product.state, product.release_date
-                )
-            );
-        
-            debug(`save products: ${util.inspect(storedProducts)}`);
-            res.json(await Promise.all(storedProducts));
+            res.json(await Promise.all(products));
         } catch (err) {
             flush(err.stack);
             res.status(500).send(`
@@ -46,8 +45,8 @@ export default {
     // @desc List all paginated products and related categories
     async list(req, res, next) {
         try {
-            const page = parseInt(req.params.page, 10);
-            const size = parseInt(req.params.size, 10);
+            const page = parseInt(req.query.page, 10);
+            const hitsPerPage = parseInt(req.query.hitsPerPage, 10);
 
             if (isNaN(page) || page <= 0) {
                 return res.status(400).json({
@@ -57,8 +56,8 @@ export default {
                 });
             }
 
-            let products = await ProductsModel.list(page, size);
-            !product_id && (products = []);
+            let products = await ProductsModel.list(page, hitsPerPage);
+            !products && (products = []);
             debug(`list products: ${util.inspect(products)}`);
             res.json(products);
         } catch (err) {

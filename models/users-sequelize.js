@@ -20,7 +20,7 @@ async function connectDB() {
 
     SqUser = sqlize.define("Users", {
         user_id: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.STRING,
             unique: true,
             primaryKey: true
         },
@@ -69,18 +69,7 @@ async function check (email) {
             email: {[Op.eq]: email}
         }
     });
-    if (!user) {
-        return {
-            found: false,
-            email,
-            message: "Create a new account"
-        };
-    }
-
-    return {
-        found: true,
-        user
-    };
+    return user;
 }
 
 // @desc List all users on the platform

@@ -1,6 +1,8 @@
 import Sequelize from "sequelize";
 import fs from "fs-extra";
 import jsyaml from "js-yaml";
+import Products from "./poducts-sequelize";
+import ProductOrders from "./productOrders-sequelize";
 
 let sqlize;
 let SqOrders;
@@ -20,12 +22,12 @@ async function connectDB() {
 
     SqOrders = sqlize.define("Orders", {
         order_id: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.STRING,
             unique: true,
             primaryKey: true
         },
         user_id: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.STRING,
             allowNull: false
         },
         order_date: {
@@ -41,20 +43,18 @@ async function connectDB() {
             notEmpty: true
         },
         subtotal: {
-            type: Sequelize.NUMBER,
+            type: Sequelize.INTEGER,
             allowNull: false
         }
     });
 
     // @desc Make association between Oders and Products tables
-    SqOrders.associate = models => {
-        SqOrders.belongsToMany(models.Products, {
-            through: "ProductOrders",
+        SqOrders.belongsToMany(await Products(), {
+            through: await ProductOrders(),
             as: "products",
             foreignKey: "order_id",
             otherKey: "product_id"
         });
-    };
 
     return SqOrders.sync();
 }
@@ -73,12 +73,12 @@ async function check(order_id) {
     const SqOrders = await connectDB();
     const order = await SqOrders.findOne({
         include: [{
-            model: "Products",
+            model: await Products(),
             as: "products",
             required: false,
             attributes: ["product_id", "name", "state"],
             through: {
-                model: "ProductOrders",
+                model: await ProductOrders(),
                 as: "productOrders",
                 attributes: ["quantity"]
             }
@@ -95,12 +95,12 @@ async function list() {
     const SqOrders = await connectDB();
     const orders = await SqOrders.findAll({
         include: [{
-            model: "Products",
+            model: await Products(),
             as: "products",
             required: false,
             attributes: ["product_id", "name", "state"],
             through: {
-                model: "ProductOrders",
+                model: await ProductOrders(),
                 as: "productOrders",
                 attributes: ["quantity"]
             },

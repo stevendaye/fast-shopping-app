@@ -10,7 +10,7 @@ const categoriesRoutes = app => {
     router.get(config.get("routes.category.list"), categories.list);
     router.post(config.get("routes.category.saveProductCategory"), categories.saveProductCategories);
 
-    router.use(app);
+    app.use(router);
 };
 
 export default categoriesRoutes;

@@ -18,15 +18,21 @@ async function connectDB() {
     }
 
     SqProductOrders = sqlize.define("ProductOrders", {
-        order_id: Sequelize.INTEGER,
-        product_id: Sequelize.INTEGER,
+        order_id: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        product_id: {
+            type: Sequelize.INTEGER,
+            allowNull: false
+        },
         quantity: {
             type: Sequelize.INTEGER,
             allowNull: false
         }
     });
 
-    SqProductOrders.sync();
+    return SqProductOrders.sync();
 }
 
 // @desc Save|Creat Orders

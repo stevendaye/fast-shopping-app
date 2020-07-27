@@ -1,6 +1,8 @@
 import Sequelize from "sequelize";
 import fs from "fs-extra";
 import jsyaml from "js-yaml";
+import Products from "./poducts-sequelize";
+import ProductCategories from "./productCategories-sequelize";
 
 let sqlize;
 let SqCategories;
@@ -15,10 +17,10 @@ async function connectDB() {
     }
 
     if (SqCategories) {
-        return SQOrders.sync();
+        return SqCategories.sync();
     }
 
-    SqCategories = Sequelize.define("Categories", {
+    SqCategories = sqlize.define("Categories", {
        category_id: {
            type: Sequelize.INTEGER,
            unique: true,
@@ -30,19 +32,19 @@ async function connectDB() {
        },
        description: {
            type: Sequelize.TEXT,
-           notEmpty: true
+           validate: {
+            notEmpty: true
+        }
        }
     });
 
     // @desc Make association between Categories and Products tables
-    SqCategories.associate = models => {
-        SqCategories.belongsToMany(models.Products, {
-            through: "ProductCategories",
-            as: "products",
-            foreignKey: "category_id",
-            otherKey: "product_id"
-        });
-    }
+    SqCategories.belongsToMany(await Products(), {
+        through: await ProductCategories(),
+        as: "products",
+        foreignKey: "category_id",
+        otherKey: "product_id"
+    });
 
     return SqCategories.sync();
 }
@@ -50,19 +52,32 @@ async function connectDB() {
 // @desc Save Categories
 async function save(category_id, category_name, description) {
     const SqCategories = await connectDB();
-    const category = await SqCategories.create(category_id, category_name, description);
+    const category = await SqCategories.create({
+        category_id, category_name, description
+    });
     return category;
 }
 
-// @desc Find a specific category and return paginated list
-async function check(category_id, page, size) {
+// @desc Find a specific category before storing
+async function find(category_id) {
     const SqCategories = await connectDB();
-    const skip = size * (page - 1);
-    const limit = size;
+    const category = await SqCategories.findOne({
+        where: {
+            category_id: {[Op.eq]: category_id}
+        }
+    });
+    return category;
+}
 
-    const category = await SqCategories.find({
+// @desc Check a specific category and return paginated list
+async function check(category_id, page, hitsPerPage) {
+    const SqCategories = await connectDB();
+    const skip = hitsPerPage * (page - 1);
+    const limit = hitsPerPage;
+
+    const category = await SqCategories.findOne({
         include: [{
-            model: models.Products,
+            model: await Products(),
             as: "products",
             required: false,
             attributes: [
@@ -71,7 +86,7 @@ async function check(category_id, page, size) {
                 "in_stock", "state"
             ],
             through: {
-                model: "ProductCategories",
+                model: await ProductCategories(),
                 as: "productCategories",
                 attributes: []
             },
@@ -84,10 +99,10 @@ async function check(category_id, page, size) {
         limit
     });
 
-    const pages = Math.floor(category.products.length / size);
+    const pages = Math.floor(category.products.length / hitsPerPage);
     return {
         page,
-        size,
+        hitsPerPage,
         pages,
         category
     };
@@ -100,4 +115,5 @@ async function list() {
     return categories;
 }
 
-export { save, check, list, connectDB };
+export default connectDB;
+export { save, find, check, list };

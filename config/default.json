@@ -10,6 +10,7 @@
         },
         "product": {
             "save": "/products/save",
+            "check": "/proucts/check/:id",
             "list": "/products/list"
         },
         "category": {
@@ -20,7 +21,9 @@
         },
         "order": {
             "save": "/orders/save",
-            "check": "/orders/check/:id"
+            "saveProductOrders": "/orders/save/product-orders",
+            "check": "/orders/check/:id",
+            "list": "/orders/list"
         }
     }
 }
