@@ -39,7 +39,12 @@ Follow these steps. Beforehand, make sure you are running a MySQL instance on yo
   * `cd ../`(project root)
   * `npm i`
 
-**4 Start up the application at the root of the project**
+NB: You can access the database *username* and *password* in the YAML configuration file at the root of the project, or you can change these parameters in that YAML file at *./sequelize-mysql.yaml* by your own mysql access parameters you are already using for your mysql access. However, the current parameters are:
+  * `username = root`
+  * `password = root`
+
+**4 Create the MySQL database then start up the application at the root of the project**
+  - `CREATE DATABASE fastshopping;`(Either in CLI or Make sure you are running your mysql instance)
   - `npm run dev`
 
 NB: Should anything go wrong in the installation proccess, try forcing the installation (I am quite sure you won't need to though). When successful you should see the message `Shopping Server listening at http://localhost:8080`.
@@ -54,8 +59,6 @@ When running the application in development, you will need to create the app's d
  - `SELECT * FROM Orders` -- to retrieve a list of orders made by various users.
  - `SELECT * FROM ProductOrders` --  to retrieve all products attached to an order, including each of their quantities.
  - `SELECT * FROM Users` -- to retrieve all users who once placed an order on the platform.
-
-NB: You can see the database *name* and *password* in the YAML configuration file at the root of the project. For simplicity sake, both are named **root**
 
 ## Frontend & Backend file organisation
 The whole application follows a consistent architecture a code style. We are talking of a *Unique Source of Trutth*, seperation of concerns between *Models*, *Controlers*, *State Layer* and *View Layer*. So, to make things simple, I included in a less than 10 minutes video file the application structure.
