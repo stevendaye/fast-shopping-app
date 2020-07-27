@@ -2,6 +2,7 @@ import http from "http";
 import express from "express";
 import logger from "morgan";
 import bodyParser from "body-parser";
+import path from "path";
 import cors from "cors";
 import config from "config";
 import util from "util";
@@ -50,6 +51,15 @@ usersRoutes(app);
 productsRoutes(app);
 categoriesRoutes(app);
 ordersRoutes(app);
+
+// Prepare server static assets in production
+if (process.env.NODE_ENV === "production") {
+  // Set static folder
+  app.use(express.static("client/build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 
 app.use(handler._404);
 app.use(handler._505);
