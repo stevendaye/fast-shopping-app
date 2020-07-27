@@ -1,0 +1,52 @@
+[
+    {
+        "category_id": 1,
+        "category_name": "Phone & Accessories",
+        "description": "Phones and accessories related articles."
+    },
+    {
+        "category_id": 2,
+        "category_name": "Toy & Games",
+        "description": "Toys, games and stories related items for kids and teenagers."
+    },
+    {
+        "category_id": 3,
+        "category_name": "Computers & Electronics",
+        "description": "Computers and eletronics related protducts."
+    },
+    {
+        "category_id": 4,
+        "category_name": "Utensils & Kitchen",
+        "description": "Utensils and kitchen related items."
+    },
+    {
+        "category_id": 5,
+        "category_name": "Sports & Fitness",
+        "description": "Sports, exercice and fitness products."
+    },
+    {
+        "category_id": 6,
+        "category_name": "Fashion & Clothing",
+        "description": "Style, fashion and clothing for Men and Women."
+    },
+    {
+        "category_id": 7,
+        "category_name": "Automotive",
+        "description": "Automotive, car care and interior care products."
+    },
+    {
+        "category_id": 8,
+        "category_name": "Body Care & Housholds",
+        "description": "Body lotions, creams and skin care"
+    },
+    {
+        "category_id": 9,
+        "category_name": "Kindle Ebooks",
+        "description": "Kindle store for Novel and programming ebooks"
+    },
+    {
+        "category_id": 10,
+        "category_name": "Entertainment",
+        "description": "Games and entertainment products."
+    }
+]
