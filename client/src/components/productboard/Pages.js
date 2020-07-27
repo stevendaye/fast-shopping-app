@@ -15,7 +15,7 @@ class Pages extends Component {
     }
 
     render () {
-        const { products: { isLoading, page, pages } } = this.props || {};
+        const { products: {isLoading, page, pages}} = this.props || {};
         const pageNumbers = [];
         if (pages) {
             for (let i = 1; i <= pages; i++) {
