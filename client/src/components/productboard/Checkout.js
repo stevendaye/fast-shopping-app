@@ -1,8 +1,8 @@
 import React, { Fragment, Component } from "react";
 import { connect } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
+import uuid from "uuid";
 import PropTypes from "prop-types";
-import uuid from "uuid/dist/v4";
 import Button from "./Button";
 import { doCheckUser, doSaveUser, doClearUser } from "../../actions/auth"; 
 import { doSaveOrders } from "../../actions/orders";
