@@ -1,5 +1,5 @@
 import config from "config";
-import uuid from "uuid/dist/v4";
+import { v4 as uuidv4 } from "uuid";
 import util from "util";
 import DBG from "debug";
 import * as ProductsModel from "../models/poducts-sequelize";
@@ -17,7 +17,7 @@ export default {
     // @desc Save|Create orders
     async save(req, res, next) {
         try {
-            const order_id = uuid();
+            const order_id = uuidv4();
             const user_id = req.body.user_id;
 
             let order = req.body.order;
