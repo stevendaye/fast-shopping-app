@@ -3,9 +3,6 @@ Fast Shopping App is a simple application platform that allows vistors to order 
 
 User must also be able to sort each product by **Alpha Order**, **Lower Price** and **Most Recent**. They can then select their products which will be added to their shopping cart. The cart should then contains all items the user added to complete the order. To do this, they will be redirected to a age to fill in their personal information and location for delivery. The shopping cart should also allow the user to increment the quantity of each product, display each price and the subtotal of the order. Once the order is made, the user must be redirected to a Thank You page notifying them about their successful order.
 
-While the codebase can be accessed at https://github.com/stevendaye/fast-shopping-app, the production app can be viewed at https://the-fast-shopping-app.herokupapp.com.
-
-
 ## Technologies
   *Frontend*
   - JavaScript | ES6+
@@ -16,7 +13,7 @@ While the codebase can be accessed at https://github.com/stevendaye/fast-shoppin
 
 - *Backend*
   - NodeJS | ExpressJS
-  - MySQL
+  - MySQL | Sequelize
 
 - *Architechure*
   - MVC(Model-View-Controller)
@@ -24,7 +21,7 @@ While the codebase can be accessed at https://github.com/stevendaye/fast-shoppin
 
 
 ## How To Run The Fast Shopping App
-This app is deployed on heroku at https://the-fast-shopping-app.herokupapp.com. However, would you wish to run it in development too, follow these steps. Beforehand, make sure you are running a MySQL instance on your machine.
+Follow these steps. Beforehand, make sure you are running a MySQL instance on your machine.
 
 **1- Make a clone of the app**
   * `git clone https://github.com/stevendaye/fast-shopping-app`
@@ -100,4 +97,6 @@ I included as required the ERD of the application. It is a link that can be view
 
 Appication ERD: https://app.lucidchart.com/invitations/accept/af8741cc-f83b-4589-9d78-259d6f20f325
 
-Loom Record: ...
+Loom Record: https://www.loom.com/share/665a7a1f030d4b05bc8ad683ad9dee7a
+
+Code Base: https://github.com/stevendaye/fast-shopping-app
