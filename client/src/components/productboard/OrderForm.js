@@ -47,13 +47,13 @@ const OrderForm = (
                             ? (
                                 <div className = "old-user-info">
                                     <div className = "medium">
-                                        Welcome back, { user.full_name }
+                                        Welcome back, {user.full_name}
                                     </div>
                                     <div className = "muted">
-                                        <p>ID: { user.user_id }</p>
-                                        <p>Address: { user.address }</p>
-                                        <p>Phone Number: { user.phone_number }</p>
-                                        <p>Email: { user.email }</p>
+                                        <p>ID: {user.user_id}</p>
+                                        <p>Address: {user.address}</p>
+                                        <p>Phone Number: {user.phone_number}</p>
+                                        <p>Email: {user.email}</p>
                                     </div>
                                     <div
                                         className = "lookup-again small text-emphasize"

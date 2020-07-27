@@ -67,16 +67,16 @@ class Products extends Component {
                                     <div className = "slice slice-1">
                                         {(sortedProducts.slice(0, 4)).map(product =>
                                             <Product
-                                                key = {product.product_id}
-                                                product = {product}
+                                                key={product.product_id}
+                                                product={product}
                                             />
                                         )}
                                     </div>
                                     <div className = "slice slice-2">
                                         {(sortedProducts.slice(4, 8)).map(product =>
                                             <Product
-                                                key = {product.product_id}
-                                                product = {product}
+                                                key={product.product_id}
+                                                product={product}
                                             />
                                         )}
                                     </div>

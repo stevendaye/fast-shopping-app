@@ -70,7 +70,7 @@ class Cart extends Component {
                                         <i
                                             className = "fa fa-arrow-left light-color"
                                             aria-hidden = "true"
-                                            style = {{color: "white"}}
+                                            style = {{ color: "white" }}
                                         ></i>
                                         &nbsp;&nbsp; Go back to products board!
                                     </Button>

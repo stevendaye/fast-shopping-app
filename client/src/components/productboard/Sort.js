@@ -30,7 +30,7 @@ class Sort extends PureComponent {
         return (
             <Fragment>
                 <div className = "sort fs pull-right">
-                    <label htmlFor = "sort-options medium">Sort By:</label>
+                    <label htmlFor = "sort-options medium"> Sort By: </label>
                     <Select
                         id = "sort-options"
                         placeholder = "Alpha Order"

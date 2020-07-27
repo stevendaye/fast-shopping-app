@@ -46,7 +46,7 @@ class Product extends Component {
                         <div>
                             <img
                                 alt = "Product"
-                                src = { productTitle }
+                                src = {productTitle}
                             />
                         </div>
                         <div className = "product-details">
@@ -54,7 +54,7 @@ class Product extends Component {
                                 {name}
                             </span>
                             <p className = "category">
-                                { product_categories.join(", ") }
+                                {product_categories.join(", ")}
                             </p>
                             <p className = "desc">
                                 {description}
