@@ -30,13 +30,14 @@ Follow these steps. Beforehand, make sure you are running a MySQL instance on yo
   * `cd fast-shopping-app`
 
 **3 Intall required dependencies**
+  
   *Frontend*
-    - `cd client/`
-    - `npm i`
+    * `cd client/`
+    * `npm i`
 
   *Backend*
-    - `cd ../`
-    - `npm i`
+    * `cd ../`(project root)
+    * `npm i`
 
 **4 Start up the application at the root of the project**
   - `npm run dev`
