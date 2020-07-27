@@ -1,7 +1,7 @@
 {
     "port": "8080",
     "host": {
-        "client": "process.env.CLIENT_ORIGIN_HOST || http://localhost:3000"
+        "client": "http://localhost:3000"
     },
     "routes": {
         "user": {
