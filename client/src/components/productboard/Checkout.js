@@ -1,7 +1,7 @@
 import React, { Fragment, Component } from "react";
 import { connect } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
-import uuid from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import PropTypes from "prop-types";
 import Button from "./Button";
 import { doCheckUser, doSaveUser, doClearUser } from "../../actions/auth"; 
@@ -44,7 +44,7 @@ class Checkout extends Component {
     }
 
     componentDidMount() {
-        this.setState({ userID: uuid() });
+        this.setState({ userID: uuidv4() });
         const cartIcon = document.getElementById("cart-icon");
         cartIcon.style.display = "none";
     }
